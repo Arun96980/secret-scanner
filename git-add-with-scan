@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Run git add
+git add "$@"
+
+# Run the secret scanner
+if node cli.js; then
+  echo "No secrets detected. Files staged successfully."
+else
+  echo "Secrets detected. Rolling back git add."
+  git reset
+  exit 1
+fi
